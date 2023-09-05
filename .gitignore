@@ -1,0 +1,7 @@
+node_modules/
+dist
+*.log
+.vscode
+*.png
+allure-results/
+output.txt
