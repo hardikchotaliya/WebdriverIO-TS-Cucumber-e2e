@@ -1,3 +1,31 @@
-# WebdriverIO-TS-Cucumber-e2e
+# WebdriverIO-TS-Cucumber-e2e [WebdriverIO Version - 8.18.2]
 ------------------------------------------------
-WebdriverIO Version - 8.16.4
+
+# System Requirements
+You’ll need Node.js installed.
+
+- Install at least v16.x or higher as this is the oldest active LTS version
+- Only releases that are or will become an LTS release are officially supported
+If Node is not currently installed on your system, we suggest utilizing a tool such as NVM or Volta to assist in managing multiple active Node.js versions. NVM is a popular choice, while Volta is also a good alternative.
+------------------------------------------------
+
+# To run your tests, execute:
+$ cd /Users/yserName/Documents/workspace/WebdriverIO-TS-Cucumber-e2e
+$ npm run wdio
+
+# The wdio-local script is used to run the WebdriverIO tests, generate an Allure report, and open the Allure report in a web browser.
+$ npm run wdio-local
+------------------------------------------------
+
+# Package dependencies Usage:
+
+@wdio/allure-reporter: This dependency is used to generate Allure reports from WebdriverIO tests.
+@wdio/cli: This dependency is used to run WebdriverIO tests.
+@wdio/cucumber-framework: This dependency is used to write WebdriverIO tests in Cucumber.
+@wdio/local-runner: This dependency is used to run WebdriverIO tests locally.
+@wdio/spec-reporter: This dependency is used to generate a spec report from WebdriverIO tests.
+ts-node: This dependency is used to run TypeScript scripts.
+typescript: This dependency is used to transpile TypeScript code to JavaScript.
+allure-commandline: This dependency is used to generate Allure reports from the command line.
+npm-run-all: This dependency is used to run multiple NPM scripts in parallel.
+------------------------------------------------

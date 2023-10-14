@@ -3,5 +3,7 @@ dist
 *.log
 .vscode
 *.png
-allure-results/
+allure-result/
 output.txt
+test-report/
+package-lock.json
