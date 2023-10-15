@@ -1,14 +1,14 @@
 ## WebdriverIO-TS-Cucumber-e2e [WebdriverIO Version - 8.18.2]
 ---
 
-### **System Requirements**
+### :desktop_computer: **System Requirements**
 You’ll need Node.js installed.
 
 - Install at least v16.x or higher as this is the oldest active LTS version
 - Only releases that are or will become an LTS release are officially supported ( If Node is not currently installed on your system, we suggest utilizing a tool such as NVM or Volta to assist in managing multiple active Node.js versions. NVM is a popular choice, while Volta is also a good alternative. )
 ---
 
-### **To run your tests, execute:**
+### :runner: **To run your tests, execute:**
 $ cd /Users/yserName/Documents/workspace/WebdriverIO-TS-Cucumber-e2e
 ```
 $ npm run wdio
@@ -31,6 +31,23 @@ $ npm run wdio-local
 - typescript: This dependency is used to transpile TypeScript code to JavaScript.
 - allure-commandline: This dependency is used to generate Allure reports from the command line.
 - npm-run-all: This dependency is used to run multiple NPM scripts in parallel.
+---
+
+### :newspaper: Blogs
+
+- [How to Setup Winston Logger in Automation Framework](https://hardikchotaliya.hashnode.dev/a-complete-guide-to-setting-up-logging-in-webdriverio-frameworks) - 📝 A Complete Guide to Setting up Logging in WebdriverIO Frameworks 🎯
+
+
+---
+
+### Follow Me
+
+[![LinkedIn](/img/LI-In-Bug.png)](https://www.linkedin.com/in/hardikchotaliya/)
+
+[![Blog](/img/brand-icon.png)](https://hardikchotaliya.hashnode.dev/)
+
+[![Twitter](/img/x-logo-white.png)](https://twitter.com/Hardikchotaliya)
+
 ---
 
 
