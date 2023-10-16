@@ -3,12 +3,14 @@ import { expect, $ } from '@wdio/globals'
 
 import LoginPage from '../pageobjects/login.page.js';
 import SecurePage from '../pageobjects/secure.page.js';
+import reporter from '../support/reporter.js';
 
 const pages = {
     login: LoginPage
 }
 
 Given(/^I am on the (\w+) page$/, async (page) => {
+    reporter.addStep(this.testid, "info", "Verifying forget password message...")
     await pages[page].open()
 });
 
