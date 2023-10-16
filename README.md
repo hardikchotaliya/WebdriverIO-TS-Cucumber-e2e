@@ -46,7 +46,7 @@ $ npm run wdio-local
 
 [![Blog](/img/brand-icon.png)](https://hardikchotaliya.hashnode.dev/)
 
-[![Twitter](/img/x-logo-white.png)](https://twitter.com/Hardikchotaliya)
+[![Twitter](./img/x-logo-white.png)](https://twitter.com/Hardikchotaliya)
 
 ---
 
