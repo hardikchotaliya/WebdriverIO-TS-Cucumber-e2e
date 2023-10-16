@@ -36,7 +36,7 @@ $ npm run wdio-local
 ### :newspaper: Blogs
 
 - [How to Setup Winston Logger in Automation Framework](https://hardikchotaliya.hashnode.dev/a-complete-guide-to-setting-up-logging-in-webdriverio-frameworks) - 📝 A Complete Guide to Setting up Logging in WebdriverIO Frameworks 🎯
-
+- [How to Setup .env file in Automation Framework](https://hardikchotaliya.hashnode.dev/setting-up-a-env-environment-file-for-webdriverio-typescript-framework) - 🛡️ Setting Up a .env Environment File for WebdriverIO + TypeScript Framework 🔐
 
 ---
 
