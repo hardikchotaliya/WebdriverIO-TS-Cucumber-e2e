@@ -1,4 +1,9 @@
-import type { Options } from '@wdio/types'
+import type { Options } from '@wdio/types';
+import * as dotenv from 'dotenv';
+
+// Load the .env file
+dotenv.config();
+
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -136,7 +141,10 @@ export const config: Options.Testrunner = {
     reporters: ['spec',
         ['allure',
             {
-                outputDir: './test-report/allure-result'
+                outputDir: './test-report/allure-result',
+                reportedEnvironmentVars: {
+                    'URL: ': process.env.URL_SET
+                }
             }]
     ],
 
