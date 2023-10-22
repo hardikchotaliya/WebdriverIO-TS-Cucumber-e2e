@@ -42,11 +42,11 @@ $ npm run wdio-local
 
 ### Follow Me
 
-[![LinkedIn](/img/LI-In-Bug.png)](https://www.linkedin.com/in/hardikchotaliya/)
+[![LinkedIn]](https://www.linkedin.com/in/hardikchotaliya/)
 
-[![Blog](/img/brand-icon.png)](https://hardikchotaliya.hashnode.dev/)
+[![Blog]](https://hardikchotaliya.hashnode.dev/)
 
-[![Twitter](./img/x-logo-white.png)](https://twitter.com/Hardikchotaliya)
+[![Twitter]](https://twitter.com/Hardikchotaliya)
 
 ---
 
