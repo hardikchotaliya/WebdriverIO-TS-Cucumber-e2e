@@ -36,7 +36,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        './features/**/*.feature'
+        './features/*.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -141,7 +141,7 @@ export const config: Options.Testrunner = {
     reporters: ['spec',
         ['allure',
             {
-                outputDir: './test-report/allure-result',
+                outputDir: './test-report/allure-result/',
                 reportedEnvironmentVars: {
                     'URL: ': process.env.URL_SET
                 }
@@ -151,7 +151,7 @@ export const config: Options.Testrunner = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./features/step-definitions/steps.ts'],
+        require: [`${process.cwd()}/features/**/*.ts`],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -250,8 +250,14 @@ export const config: Options.Testrunner = {
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world, context) {
-    // },
+    beforeScenario: function (world, context) {
+        // console.log(`>> world: ${JSON.stringify(world)}`);
+        let arr = world.pickle.name.split(/:/)
+        // @ts-ignore
+        if (arr.length > 0) browser.options.testid = arr[0]
+        // @ts-ignore
+        if (!browser.options.testid) throw Error(`Error getting testid for current scenario: ${world.pickle.name}`)
+    },
     /**
      *
      * Runs before a Cucumber Step.
@@ -259,8 +265,10 @@ export const config: Options.Testrunner = {
      * @param {IPickle}            scenario scenario pickle
      * @param {object}             context  Cucumber World object
      */
-    // beforeStep: function (step, scenario, context) {
-    // },
+    beforeStep: function (step, scenario, context) {
+        // @ts-ignore
+        if (browser.options.testid) context.testid = browser.options.testid
+    },
     /**
      *
      * Runs after a Cucumber Step.

@@ -9,14 +9,16 @@
     "@wdio/local-runner": "^8.18.2",
     "@wdio/spec-reporter": "^8.18.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "del-cli": "^5.1.0",
+    "path": "^0.12.7"
   },
   "scripts": {
     "wdio": "wdio run ./wdio.conf.ts",
-    "clean": "npx del allure-report",
+    "clean": "npx del test-report",
     "report:generate": "npx allure generate --clean ./test-report/allure-result/ -o ./test-report/allure-report",
     "report:open": "npx allure open test-report/allure-report",
-    "wdio-local": "npm-run-all wdio report:generate report:open --continue-on-error"
+    "wdio-local": "npm-run-all clean wdio report:generate report:open --continue-on-error"
   },
   "dependencies": {
     "allure-commandline": "^2.24.1",

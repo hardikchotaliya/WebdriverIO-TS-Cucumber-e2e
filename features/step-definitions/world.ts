@@ -1,11 +1,11 @@
 import { setWorldConstructor } from "@wdio/cucumber-framework";
 
 class CustomWorld {
-    testid: string
-    appid: string
+    appid: string;
+    testid: string; // add any properties that you need
     constructor() {
         this.appid = "",
-        this.testid = ""
+        this.testid = "" // initialize the properties with default values
     }
 }
-setWorldConstructor(CustomWorld)
+setWorldConstructor(CustomWorld) // set the custom world as the default world

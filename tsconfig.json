@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
-        "module": "ESNext",
-        "target": "es2022",
+        "module": "ES2022",
+        "target": "ES2022",
         "lib": [
-            "es2022",
+            "ES2022",
             "dom"
         ],
         "types": [
@@ -18,13 +18,10 @@
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "strict": true,
+        // "strict": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": [
-        "test",
-        "wdio.conf.ts"
-    ]
+    "include": ["./**/*"]
 }
