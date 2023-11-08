@@ -167,7 +167,7 @@ export const config: Options.Testrunner = {
         // <boolean> fail if there are any undefined or pending steps
         strict: false,
         // <string> (expression) only execute the features or scenarios with tags matching the expression
-        tagExpression: '',
+        tagExpression: process.env.TAGS || '@test1234',
         // <number> timeout for step definitions
         timeout: 60000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
@@ -280,8 +280,14 @@ export const config: Options.Testrunner = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+    afterStep: async function (step, scenario, result, context) {
+        // console.log(`>> scenario: ${JSON.stringify(scenario)}`);
+        if (!result.passed) {
+            await browser.takeScreenshot()
+        }
+        // console.log(scenario.result.status === "PASSED" ? 'Passed' : 'Failed');
+        // await browser.takeScreenshot();
+    },
     /**
      *
      * Runs after a Cucumber Scenario.
@@ -292,8 +298,13 @@ export const config: Options.Testrunner = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+    afterScenario: async function (world, result, context) {
+        // await console.log(`>> world: ${JSON.stringify(world)}`);
+        // await console.log(`>> context: ${JSON.stringify(context)}`);
+        console.log(world.result.status === "PASSED" ? `Passed - ${world.pickle.name}` : `Failed - ${world.pickle.name}`);
+        // console.log(world.pickle.name);
+        await browser.takeScreenshot();
+    },
     /**
      *
      * Runs after a Cucumber Feature.

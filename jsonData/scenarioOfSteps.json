@@ -1,0 +1,28 @@
+{
+    "id": "a5db7d3d-788d-4ab8-9542-48c1b7185f4d",
+    "uri": "features/herokuAppTest.feature",
+    "astNodeIds": [
+        "4a62dee0-6678-418e-91fd-1f895a0ddbf0",
+        "e20d21fa-bded-424f-80a7-c72c97967de4"
+    ],
+    "name": "Test_03: As a user, I am verifying the click functionality",
+    "language": "en",
+    "steps": [
+        {
+            "id": "a3c3a268-248d-4099-8bbf-e641a2ef9ecd",
+            "text": "I am on the Herokuapp Home page with  path",
+            "type": "Context",
+            "astNodeIds": [
+                "ae2aabd9-4a97-458c-9ff5-d4f3e91b11c2",
+                "e20d21fa-bded-424f-80a7-c72c97967de4"
+            ],
+            "keyword": "Given "
+        }
+    ],
+    "tags": [
+        {
+            "name": "@test123",
+            "astNodeId": "9fb6b24d-d8a3-4669-9f44-17e1d3164cf1"
+        }
+    ]
+}
