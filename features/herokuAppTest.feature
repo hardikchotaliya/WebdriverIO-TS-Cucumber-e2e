@@ -14,8 +14,8 @@ Feature: Verify Internet herokuapp Website
   @test123
   Scenario Outline: <TestID>: As a user, I am verifying the click functionality
     Given I am on the Herokuapp <pageName> page with <path> path
-    # When I click on <link>
+    When I click on <link> link
     # Then I should navigate to the <url> page with <heading>
     Examples:
-      | TestID  | pageName | path | link        | url    | heading          |
+      | TestID  | pageName | path | pageHeading | link   | heading          |
       | Test_03 | Home     |      | A/B Testing | abtest | A/B Test Control |
