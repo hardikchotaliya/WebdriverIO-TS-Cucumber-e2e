@@ -25,8 +25,9 @@ class LoginPage extends Page {
     /**
      * overwrite specific options to adapt it to page object
      */
-    public open () {
-        return super.openHerokuapp('login');
+    async open () {
+        this.loadURL('https://the-internet.herokuapp.com/login');
+        // return super.openHerokuapp('login');
     }
 }
 

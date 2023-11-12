@@ -5,11 +5,11 @@ import LoginPage from '../pageobjects/login.page.js';
 import SecurePage from '../pageobjects/secure.page.js';
 // import reporter from '../support/reporter.js';
 
-const pages = { login: LoginPage }
+// const pages = { login: LoginPage }
 
-Given(/^I am on the (\w+) page$/, async (page) => {
+Given(/^I am on the login page$/, async () => {
     // reporter.addStep(this.testid, "info", "Verifying forget password message...")
-    await pages[page].open()
+    await LoginPage.open();
 });
 
 When(/^I login with (\w+) and (.+)$/, async function (username, password) {

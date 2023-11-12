@@ -142,6 +142,10 @@ export const config: Options.Testrunner = {
         ['allure',
             {
                 outputDir: './test-report/allure-result/',
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: false,
+                useCucumberStepReporter: true,
+                addConsoleLogs: true, // commented to check whether it is hurting AWS integration or not,
                 reportedEnvironmentVars: {
                     'URL: ': process.env.URL_SET
                 }
