@@ -50,14 +50,14 @@ export default class Page {
 
     async waitForVisibilityOf(webElement: WebdriverIO.Element, timeOuts = Timeouts._10Seconds): Promise<void> {
         try {
-            await webElement.waitForDisplayed({ timeout: timeOuts, timeoutMsg: `element is not visible after ${timeOuts} seconds`,});
+            await webElement.waitForDisplayed({ timeout: timeOuts, timeoutMsg: `element is not visible after ${timeOuts} seconds`, });
         } catch (error) {
             console.log(`Error: ${error}`);
             throw error;
         }
     }
 
-    async getText(webElement: WebdriverIO.Element): Promise<string> { 
+    async getText(webElement: WebdriverIO.Element): Promise<string> {
         return await webElement.getTagName();
     }
 
@@ -66,6 +66,15 @@ export default class Page {
             // await expect(actual).toEqual(expected);
             await expect(webElement).toHaveText(expected);
             console.log(`Assertion >> As Actual text is equal to ${expected}.`);
+        } catch (err) {
+            console.log(`Message: ${msg}, Error: ${err}`);
+            throw err;
+        }
+    }
+
+    async checkIfTrueOrFalse(isTrue: boolean, expectedTrueOrFalse: boolean , msg?: string): Promise<void> {
+        try {
+            await expect(isTrue).toBe(expectedTrueOrFalse);
         } catch (err) {
             console.log(`Message: ${msg}, Error: ${err}`);
             throw err;
@@ -83,5 +92,31 @@ export default class Page {
         }
     }
 
+    async checkIsElementDisplayed(webElement: WebdriverIO.Element, msg?: string): Promise<boolean> {
+        try {
+            return await webElement.isDisplayed();
+        } catch (err) {
+            console.log(`Message: ${msg}, Error: ${err}`);
+            throw err;
+        }
+    }
 
+    async checkIsElementNotDisplayed(webElement: WebdriverIO.Element): Promise<boolean> {
+        try {
+            return !(await webElement).isDisplayed();
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+
+    async checkIsElementDisplayedInViewport(webElement: WebdriverIO.Element, msg?: string): Promise<boolean> {
+        try {
+            return await webElement.isDisplayedInViewport();
+        } catch (err) {
+            console.log(`Message: ${msg}, Error: ${err}`);
+            throw err;
+        }
+    }
 }

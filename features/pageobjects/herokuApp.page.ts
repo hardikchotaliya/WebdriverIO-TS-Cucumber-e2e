@@ -15,6 +15,8 @@ class HerokuAppPage extends Page {
     get waitPageLoad() { return $('#content'); }
     get homepageHeading() { return $('#content > h1'); }
     get pageHeading() { return $('#content h3'); }
+    get btnAddElement() { return $('//button[text()="Add Element"]'); }
+    get btnDelete() { return $('//button[text()="Delete"][last()]'); }
 
     /**
     * Opens a sub page of the page
@@ -22,6 +24,7 @@ class HerokuAppPage extends Page {
     */
     async openHerokuapp(path?: string) {
         await page.loadURL(`https://the-internet.herokuapp.com/${path}`);
+        console.log(`Load URL - https://the-internet.herokuapp.com/${path}`);
         await page.waitForVisibilityOf(await this.waitPageLoad, Timeouts._10Seconds);
     }
 
@@ -42,7 +45,53 @@ class HerokuAppPage extends Page {
         await page.click(ele);
     }
 
+    async clickOnAddElementButton() {
+        await page.waitForVisibilityOf(await this.btnAddElement, Timeouts._30Seconds)
+        await page.click(await this.btnAddElement);
+    }
 
+    async clickOnDeleteButton() {
+        await page.waitForVisibilityOf(await this.btnDelete, Timeouts._30Seconds)
+        await page.click(await this.btnDelete);
+    }
+
+    async isDeleteButtonDisplayed() {
+        let isDeleteBittonVisible = await page.checkIsElementDisplayed(await this.btnDelete);
+        console.log('isDeleteBittonVisible-' + isDeleteBittonVisible);
+        await page.checkIfTrueOrFalse(isDeleteBittonVisible, true, 'Delete button is not displayed!');
+    }
+
+    async isDeleteButtonRemoved() {
+        let isDeleteButtonremoved = await page.checkIsElementNotDisplayed(await this.btnDelete);
+        console.log('isDeleteBittonremoved-' + isDeleteButtonremoved);
+        await page.checkIfTrueOrFalse(isDeleteButtonremoved, false, 'Delete button is displayed!');
+    }
+
+    async verifyAddRemoveElementFunctionality(action: string): Promise<void> {
+        try {
+            switch (action.toUpperCase()) {
+                case 'ADD': {
+                    console.log("ADD action is executed");
+                    await this.clickOnAddElementButton();
+                    await this.isDeleteButtonDisplayed();
+                    break;
+                }
+                case 'REMOVE': {
+                    console.log("REMOVE action is executed");
+                    await this.clickOnDeleteButton();
+                    await this.isDeleteButtonRemoved();
+                    break;
+                }
+                default: {
+                    console.log(`Unsupported action: ${action}`);
+                    throw new Error(`Unsupported action: ${action}`);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err.message}`);
+            throw err;
+        }
+    }
 
 }
 
