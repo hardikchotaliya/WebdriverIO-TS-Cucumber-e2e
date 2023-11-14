@@ -7,6 +7,10 @@ Given(/^I am on the Herokuapp ([^"]*) page with ([^"]*) path$/, async (pageName,
     await HerokuAppPage.openHerokuapp(path);
 });
 
+Given(/^I am on the "([^"]*)" page with "([^"]*)" URL$/, async (pageName, url) => {
+    await HerokuAppPage.openWebsite(url);
+});
+
 When(/^I verify the Herokuapp homepage$/, async () => {
     await HerokuAppPage.verifyHomepageHeading();
 });

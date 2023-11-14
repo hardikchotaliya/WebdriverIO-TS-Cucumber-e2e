@@ -22,7 +22,7 @@ Feature: Verify Internet herokuapp Website
       | TestID  | pageName | path | link   | heading  |
       | Test_03 | Home     |      | abtest | A/B Test |
 
-  @test123
+  @herokuapp
   Scenario Outline: <TestID>: As a user, I am verifying the Add/Remove Elements functionality
     Given I am on the Herokuapp <pageName> page with <path> path
     Then I should navigate to the <link> page with heading - <heading>
@@ -30,4 +30,13 @@ Feature: Verify Internet herokuapp Website
     Then I verify the "Remove" Element functionality
     Examples:
       | TestID  | pageName   | path                 | link                | heading             |
-      | Test_03 | Add/Remove | add_remove_elements/ | add_remove_elements | Add/Remove Elements |
+      | Test_04 | Add/Remove | add_remove_elements/ | add_remove_elements | Add/Remove Elements |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Basic Auth on chrome
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Given I am on the "Auth" page with "<url>" URL
+    Then I should navigate to the <link> page with heading - <heading>
+    Examples:
+      | TestID  | pageName   | link       | url                                                       | heading    |
+      | Test_05 | Basic Auth | basic_auth | https://admin:admin@the-internet.herokuapp.com/basic_auth | Basic Auth |

@@ -25,7 +25,13 @@ class HerokuAppPage extends Page {
     async openHerokuapp(path?: string) {
         await page.loadURL(`https://the-internet.herokuapp.com/${path}`);
         console.log(`Load URL - https://the-internet.herokuapp.com/${path}`);
-        await page.waitForVisibilityOf(await this.waitPageLoad, Timeouts._10Seconds);
+        // await page.waitForVisibilityOf(await this.waitPageLoad, Timeouts._10Seconds);
+    }
+
+    async openWebsite(url: string) {
+        await page.loadURL(url);
+        console.log('url - ' + url);
+        // await page.waitForVisibilityOf(await this.waitPageLoad, Timeouts._10Seconds);
     }
 
     async verifyHomepageHeading() {
@@ -92,6 +98,25 @@ class HerokuAppPage extends Page {
             throw err;
         }
     }
+
+    async VerifyAuth() {
+        // let gettext = await page.getAlertText();
+        // console.log(gettext);
+        // console.log('isAlertOpen - '+ await browser.isAlertOpen()); // outputs: false
+        // await browser.execute('window.alert()');
+        // console.log('isAlertOpen - '+ await browser.isAlertOpen()); // outputs: true
+        await browser.pause(2000);
+        // const isPromptOpen = await browser.isAlertOpen(); // checks if prompt is open
+        // console.log("isPromptOpen-" + isPromptOpen);
+        // await browser.sendAlertText("admin")
+        await browser.dismissAlert();
+        await browser.pause(5000);
+        // await browser.takeScreenshot();
+        // const promptboxText = await browser.getAlertText();//returns the text of prompt box
+        // await browser.acceptAlert(); //accepts the prompt box
+    }
+
+
 
 }
 

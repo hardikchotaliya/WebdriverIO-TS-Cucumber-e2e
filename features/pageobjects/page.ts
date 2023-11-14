@@ -11,6 +11,7 @@ export default class Page {
         // await browser.deleteAllCookies(); //Showing Error in Alure Repoter
         await browser.url(url)
         await browser.maximizeWindow();
+        await browser.pause(1000);
     }
 
     async click(webElement: WebdriverIO.Element) {
@@ -110,7 +111,6 @@ export default class Page {
         }
     }
 
-
     async checkIsElementDisplayedInViewport(webElement: WebdriverIO.Element, msg?: string): Promise<boolean> {
         try {
             return await webElement.isDisplayedInViewport();
@@ -118,5 +118,9 @@ export default class Page {
             console.log(`Message: ${msg}, Error: ${err}`);
             throw err;
         }
+    }
+
+    async getAlertText(): Promise<string> {
+        return await browser.getAlertText();
     }
 }
