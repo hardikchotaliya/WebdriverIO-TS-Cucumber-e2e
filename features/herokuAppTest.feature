@@ -37,6 +37,16 @@ Feature: Verify Internet herokuapp Website
     Given I am on the Herokuapp <pageName> page with <link> path
     Given I am on the "Auth" page with "<url>" URL
     Then I should navigate to the <link> page with heading - <heading>
+    Then I verify the body message "<expectedMsg>" of the page
     Examples:
-      | TestID  | pageName   | link       | url                                                       | heading    |
-      | Test_05 | Basic Auth | basic_auth | https://admin:admin@the-internet.herokuapp.com/basic_auth | Basic Auth |
+      | TestID  | pageName   | link       | url                                                       | heading    | expectedMsg     |
+      | Test_05 | Basic Auth | basic_auth | https://admin:admin@the-internet.herokuapp.com/basic_auth | Basic Auth | Congratulations |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Broken images on the page
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Then I should navigate to the <link> page with heading - <heading>
+    Then I check for the Broken Images on the page
+    Examples:
+      | TestID  | pageName      | link          | path          | heading       |
+      | Test_06 | Broken Images | broken_images | broken_images | Broken Images |

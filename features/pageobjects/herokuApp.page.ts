@@ -1,4 +1,4 @@
-import { $ } from '@wdio/globals';
+import { $, $$ } from '@wdio/globals';
 import Page from './page.js';
 import { Timeouts } from '../constants/staticData.js';
 
@@ -17,6 +17,8 @@ class HerokuAppPage extends Page {
     get pageHeading() { return $('#content h3'); }
     get btnAddElement() { return $('//button[text()="Add Element"]'); }
     get btnDelete() { return $('//button[text()="Delete"][last()]'); }
+    get gtBodyMsg() { return $('#content p'); }
+    get gtImages() { return $$('img'); }
 
     /**
     * Opens a sub page of the page
@@ -99,22 +101,17 @@ class HerokuAppPage extends Page {
         }
     }
 
-    async VerifyAuth() {
-        // let gettext = await page.getAlertText();
-        // console.log(gettext);
-        // console.log('isAlertOpen - '+ await browser.isAlertOpen()); // outputs: false
-        // await browser.execute('window.alert()');
-        // console.log('isAlertOpen - '+ await browser.isAlertOpen()); // outputs: true
-        await browser.pause(2000);
-        // const isPromptOpen = await browser.isAlertOpen(); // checks if prompt is open
-        // console.log("isPromptOpen-" + isPromptOpen);
-        // await browser.sendAlertText("admin")
-        await browser.dismissAlert();
-        await browser.pause(5000);
-        // await browser.takeScreenshot();
-        // const promptboxText = await browser.getAlertText();//returns the text of prompt box
-        // await browser.acceptAlert(); //accepts the prompt box
+    async checkBodyMessage(expMsg: string) {
+        let gtActualMsg = await page.getText(await this.gtBodyMsg);
+        await page.checkIfEqualContainsText(await this.gtBodyMsg, expMsg, `Actual message: ${gtActualMsg} is not containing the Expected message: ${expMsg}`)
     }
+
+    async checkBrokenImages() {
+        // page.checkBrokenImagesUsingResponseCode(await this.gtImages)
+
+        page.checkBrokenImagesUsingNaturalWidthAttribute2(await this.gtImages);
+    }
+
 
 
 

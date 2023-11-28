@@ -27,3 +27,11 @@ Then(/^I should navigate to the ([^"]*) page with heading - ([^"]*)$/, async (ur
 When(/^I verify the "([^"]*)" Element functionality$/, async (action) => {
     await herokuAppPage.verifyAddRemoveElementFunctionality(action);
 });
+
+Then(/^I verify the body message "([^"]*)" of the page$/, async (expectedMsg) => {
+    await HerokuAppPage.checkBodyMessage(expectedMsg);
+});
+
+Then(/^I check for the Broken Images on the page$/, async () => {
+    await HerokuAppPage.checkBrokenImages();
+});
