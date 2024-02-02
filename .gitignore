@@ -5,3 +5,5 @@ allure-result/
 output.txt
 test-report/
 package-lock.json
+.DS_Store
+.classpath
