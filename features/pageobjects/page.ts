@@ -1,5 +1,7 @@
 import { browser } from '@wdio/globals';
 import { Timeouts } from '../constants/staticData.js';
+import reporter from "../support/reporter.js"
+import { expect as expectChai } from 'chai'
 
 /**
 * main page object containing all methods, selectors and functionality
@@ -124,8 +126,9 @@ export default class Page {
         return await browser.getAlertText();
     }
 
-    async checkBrokenImagesUsingResponseCode(webElement: WebdriverIO.ElementArray) {
+    async checkBrokenImagesUsingResponseCode(testid: string, webElement: WebdriverIO.ElementArray): Promise<string[]> {
         const images = await webElement;
+        const brokenImageSources: string[] = [];
 
         for (const image of images) {
             const src = await image.getAttribute('src');
@@ -138,8 +141,11 @@ export default class Page {
             console.log("Fetched URL - " + response);
             if (response !== 200) {
                 console.error(`Broken image found: ${src}`);
+                reporter.addStep(testid, "info", `Assertion of ${testid} >> Found Broken image = ${src}`);
+                brokenImageSources.push(src);
             }
         }
+        return brokenImageSources;
     }
 
     // async checkBrokenImagesUsingNaturalWidthAttribute1(webElement: WebdriverIO.ElementArray) {
@@ -170,10 +176,11 @@ export default class Page {
      * browser.execute: Executes JavaScript code in the browser context, enabling interaction with the webpage.
      * Array.prototype.map: Transforms elements of an array based on a provided function, creating a new array with the transformed values.
      */
-    async checkBrokenImagesUsingNaturalWidthAttributeV2(webElement: WebdriverIO.ElementArray) {
+    async checkBrokenImagesUsingNaturalWidthAttributeV2(testid: string, webElement: WebdriverIO.ElementArray): Promise<string[]> {
         try {
             const images = await webElement;
-            const imageUrls = await Promise.all(images.map(async image => {
+            const brokenImageSources: string[] = [];
+            const imageUrls = await Promise.all(await images.map(async image => {
                 return image.getAttribute('src');
             }));
 
@@ -190,17 +197,20 @@ export default class Page {
             naturalWidths.forEach((naturalWidth, index) => {
                 if (naturalWidth === 0) {
                     console.log(`Broken image is ${imageUrls[index]}`);
+                    brokenImageSources.push(imageUrls[index]);
                 }
             });
+            return brokenImageSources;
         } catch (error) {
             console.error(`Error occurred: ${error}`);
             throw error;
         }
     }
 
-    async checkBrokenImagesUsingNaturalWidthAttributeV1(webElement: WebdriverIO.ElementArray) {
+    async checkBrokenImagesUsingNaturalWidthAttributeV1(testid: string, webElement: WebdriverIO.ElementArray): Promise<string[]> {
         // Find all image elements on the page
         const images = await webElement;
+        const brokenImageSources: string[] = [];
 
         // Iterate through each image and check its naturalWidth
         for (const image of images) {
@@ -221,8 +231,29 @@ export default class Page {
             // Check if the image has a natural width of 0 (indicating a broken image)
             if (naturalWidth === 0) {
                 await console.log(`${imageUrl} image is broken with width ${naturalWidth}`);
+                brokenImageSources.push(imageUrl);
             }
             // assert.strictEqual(naturalWidth, 0, `Image ${imageUrl} is broken`);
+        }
+        return brokenImageSources;
+    }
+
+    async checkIfEqualText(actual: unknown, expected: unknown, msg?: string): Promise<void> {
+        try {
+            await expectChai(actual, msg).to.equal(expected);
+            console.log(`Assertion >> As Expected:- ${actual} is equal to ${expected}.`);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    async checkIfContainsText(original: string, substring: string, msg?: string): Promise<boolean> {
+        try {
+            return original.includes(substring);
+        } catch (err) {
+            console.log(err, msg);
+            throw err;
         }
     }
 
