@@ -35,3 +35,8 @@ Then(/^I verify the body message "([^"]*)" of the page$/, async function (expect
 Then(/^I check for the Broken Images on the page$/, async function () {
     await HerokuAppPage.checkBrokenImages(this.testid);
 });
+
+Then(/^I verify the checkboxes functionality$/, async function () {
+    await HerokuAppPage.uncheckAllCheckboxes(this.testid);
+    await HerokuAppPage.checkAllCheckboxes(this.testid);
+});

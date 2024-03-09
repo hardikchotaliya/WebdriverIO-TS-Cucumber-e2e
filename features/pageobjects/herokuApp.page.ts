@@ -72,7 +72,6 @@ class HerokuAppPage extends Page {
         console.log('isDeleteBittonVisible-' + isDeleteBittonVisible);
         await page.checkIfTrueOrFalse(isDeleteBittonVisible, true, 'Delete button is not displayed!');
         reporter.addStep(testid, "info", `Assertion of ${testid} >> Verfied Delete button is displayed successfully`);
-        
     }
 
     async isDeleteButtonRemoved(testid: string) {
@@ -130,8 +129,36 @@ class HerokuAppPage extends Page {
         /* Check Broken Images Using Natural Width Attribute Variation 2 */
         let sBrokenImageNameV2 = await page.checkBrokenImagesUsingNaturalWidthAttributeV2(testid, await this.gtImages);
         await page.checkIfEqualText(sBrokenImageNameV2[0], 'asdf.jpg', `Actual message: ${sBrokenImageNameV2[0]} is not containing the Expected message: asdf.jpg`);
-        await page.checkIfEqualText(sBrokenImageNameV2[1], 'hjkl.jpg', `Actual message: ${sBrokenImageNameV2[1]} is not containing the Expected message: hjkl.jpg`);  
-        reporter.addStep(testid, "info", `Assertion of ${testid} >> Verfied Broken Image using Natural Width Attribute Variation 2`);      
+        await page.checkIfEqualText(sBrokenImageNameV2[1], 'hjkl.jpg', `Actual message: ${sBrokenImageNameV2[1]} is not containing the Expected message: hjkl.jpg`);
+        reporter.addStep(testid, "info", `Assertion of ${testid} >> Verfied Broken Image using Natural Width Attribute Variation 2`);
+    }
+
+    async checkAllCheckboxes(testid: string) {
+        const checkboxes = await $$('#checkboxes input[type="checkbox"]');
+        
+        for (const checkbox of checkboxes) {
+            const isChecked = await checkbox.isSelected();
+            if (!isChecked) {
+                await checkbox.click();
+            }
+            await expect(checkbox).toBeChecked();
+        }
+    
+        reporter.addStep(testid, "info", `Assertion of ${testid} >> Verified all checkboxes are checked`);
+    }
+    
+    async uncheckAllCheckboxes(testid: string) {
+        const checkboxes = await $$('#checkboxes input[type="checkbox"]');
+        
+        for (const checkbox of checkboxes) {
+            const isChecked = await checkbox.isSelected();
+            if (isChecked) {
+                await checkbox.click();
+                await expect(checkbox).not.toBeChecked();
+            }
+        }
+    
+        reporter.addStep(testid, "info", `Assertion of ${testid} >> Verified all checkboxes are unchecked`);
     }
 
 

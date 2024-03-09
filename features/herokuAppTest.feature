@@ -50,3 +50,12 @@ Feature: Verify Internet herokuapp Website
     Examples:
       | TestID  | pageName      | link          | path          | heading       |
       | Test_06 | Broken Images | broken_images | broken_images | Broken Images |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Checkboxes functionality on the page
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Then I should navigate to the <link> page with heading - <heading>
+    Then I verify the checkboxes functionality
+    Examples:
+      | TestID  | pageName   | link       | path       | heading    |
+      | Test_07 | Checkboxes | checkboxes | checkboxes | Checkboxes |
