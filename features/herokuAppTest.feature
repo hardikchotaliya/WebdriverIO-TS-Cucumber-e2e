@@ -48,8 +48,8 @@ Feature: Verify Internet herokuapp Website
     Then I should navigate to the <link> page with heading - <heading>
     Then I check for the Broken Images on the page
     Examples:
-      | TestID  | pageName      | link          | path          | heading       |
-      | Test_06 | Broken Images | broken_images | broken_images | Broken Images |
+      | TestID  | pageName      | link          | heading       |
+      | Test_06 | Broken Images | broken_images | Broken Images |
 
   @herokuapp
   Scenario Outline: <TestID>: As a user, I am verifying Checkboxes functionality on the page
@@ -57,8 +57,8 @@ Feature: Verify Internet herokuapp Website
     Then I should navigate to the <link> page with heading - <heading>
     Then I verify the checkboxes functionality
     Examples:
-      | TestID  | pageName   | link       | path       | heading    |
-      | Test_07 | Checkboxes | checkboxes | checkboxes | Checkboxes |
+      | TestID  | pageName   | link       | heading    |
+      | Test_07 | Checkboxes | checkboxes | Checkboxes |
 
   @herokuapp
   Scenario Outline: <TestID>: As a user, I am verifying Context menu items that are custom additions that appear in the right-click menu
@@ -66,5 +66,15 @@ Feature: Verify Internet herokuapp Website
     Then I should navigate to the <link> page with heading - <heading>
     Then I verify the Context menu functionality
     Examples:
-      | TestID  | pageName     | link         | path         | heading      |
-      | Test_08 | Context Menu | context_menu | context_menu | Context Menu |
+      | TestID  | pageName     | link         | heading      |
+      | Test_08 | Context Menu | context_menu | Context Menu |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Digest Authentication (user and pass: admin)
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Given I am on the "Auth" page with "<url>" URL
+    Then I should navigate to the <link> page by checking URL
+    Then I verify the body message "<expectedMsg>" of the page
+    Examples:
+      | TestID  | pageName    | url                                                        | link        | expectedMsg     |
+      | Test_08 | Digest Auth | https://admin:admin@the-internet.herokuapp.com/digest_auth | digest_auth | Congratulations |

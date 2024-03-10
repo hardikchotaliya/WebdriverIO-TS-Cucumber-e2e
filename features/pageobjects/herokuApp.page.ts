@@ -170,6 +170,7 @@ class HerokuAppPage extends Page {
         await page.acceptAlert();
         reporter.addStep(testid, "info", `Assertion of ${testid} >> Context menu right clikced successfully`);
     }
+
     
 
 }

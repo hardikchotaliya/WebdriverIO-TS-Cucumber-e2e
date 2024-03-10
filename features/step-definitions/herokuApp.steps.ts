@@ -24,6 +24,10 @@ Then(/^I should navigate to the ([^"]*) page with heading - ([^"]*)$/, async fun
     await HerokuAppPage.verifyPageHeading(this.testid, heading);
 });
 
+Then(/^I should navigate to the ([^"]*) page by checking URL$/, async function (url) {
+    await HerokuAppPage.checkURLContains(url);
+});
+
 When(/^I verify the "([^"]*)" Element functionality$/, async function (action) {
     await herokuAppPage.verifyAddRemoveElementFunctionality(this.testid, action);
 });
@@ -44,3 +48,4 @@ Then(/^I verify the checkboxes functionality$/, async function () {
 Then(/^I verify the Context menu functionality$/, async function () {
     await HerokuAppPage.verifyContextMenuByRightClick(this.testid);
 });
+
