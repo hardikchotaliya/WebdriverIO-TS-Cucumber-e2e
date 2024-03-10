@@ -21,6 +21,10 @@ class HerokuAppPage extends Page {
     get gtBodyMsg() { return $('#content p'); }
     get gtImages() { return $$('img'); }
     get clkContextMenuSpot() { return $('div#hot-spot'); }
+    get gtColumnAHeading() { return $('#column-a header'); }
+    get gtColumnBHeading() { return $('#column-b header'); }
+    get clkColumnA() { return $('#column-a'); }
+    get clkColumnB() { return $('#column-b'); }
 
     /**
     * Opens a sub page of the page
@@ -170,6 +174,20 @@ class HerokuAppPage extends Page {
         await page.acceptAlert();
         reporter.addStep(testid, "info", `Assertion of ${testid} >> Context menu right clikced successfully`);
     }
+
+    async verifyDragAndDropFucntionality(testid: string) {
+        await page.checkIfEqualText(await page.getText(await this.gtColumnAHeading), 'A', 'By default the first Column box heading is not A');
+        await page.checkIfEqualText(await page.getText(await this.gtColumnBHeading), 'B', 'By default the Second Column box heading is not B');
+        
+        /* Drag block A to B and check heading of first colum should be B after it  */
+        await page.dragAndDrop(await this.clkColumnA, await this.clkColumnB);
+        await page.checkIfEqualText(await page.getText(await this.gtColumnAHeading), 'B', 'After draging block A to B the first Column box heading is not B');
+        await page.checkIfEqualText(await page.getText(await this.gtColumnBHeading), 'A', 'After draging block A to B the first Column box heading is not A');
+        
+        reporter.addStep(testid, "info", `Assertion of ${testid} >> Verified Drag And Drop Fucntionality successfully`);
+    }
+
+
 
     
 

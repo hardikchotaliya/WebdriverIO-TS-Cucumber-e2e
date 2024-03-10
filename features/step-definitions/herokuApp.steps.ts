@@ -49,3 +49,7 @@ Then(/^I verify the Context menu functionality$/, async function () {
     await HerokuAppPage.verifyContextMenuByRightClick(this.testid);
 });
 
+Then(/^I verify the drag and drop fucntionality$/, async function () {
+    await HerokuAppPage.verifyDragAndDropFucntionality(this.testid);
+});
+

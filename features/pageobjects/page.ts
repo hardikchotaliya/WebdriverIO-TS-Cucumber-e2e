@@ -25,7 +25,7 @@ export default class Page {
     }
 
     async rightClick(webElement: WebdriverIO.Element) {
-        await webElement.click({ button: 2, skipRelease:true});
+        await webElement.click({ button: 2, skipRelease: true });
     }
 
     async getCurrentUrl(): Promise<string> {
@@ -65,7 +65,7 @@ export default class Page {
     }
 
     async getText(webElement: WebdriverIO.Element): Promise<string> {
-        return await webElement.getTagName();
+        return await webElement.getText();
     }
 
     async checkIfEqual(webElement: WebdriverIO.Element, expected: string, msg?: string): Promise<void> {
@@ -267,6 +267,11 @@ export default class Page {
             console.log(err, msg);
             throw err;
         }
+    }
+
+    async dragAndDrop(elem: WebdriverIO.Element, target: WebdriverIO.Element): Promise<void> {
+        // drag and drop to other element
+        await elem.dragAndDrop(target);
     }
 
 }

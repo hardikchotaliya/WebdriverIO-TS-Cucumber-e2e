@@ -73,8 +73,17 @@ Feature: Verify Internet herokuapp Website
   Scenario Outline: <TestID>: As a user, I am verifying Digest Authentication (user and pass: admin)
     Given I am on the Herokuapp <pageName> page with <link> path
     Given I am on the "Auth" page with "<url>" URL
-    Then I should navigate to the <link> page by checking URL
+    Then I should navigate to the <link> page with heading - <heading>
     Then I verify the body message "<expectedMsg>" of the page
     Examples:
-      | TestID  | pageName    | url                                                        | link        | expectedMsg     |
-      | Test_08 | Digest Auth | https://admin:admin@the-internet.herokuapp.com/digest_auth | digest_auth | Congratulations |
+      | TestID  | pageName    | url                                                        | link        | expectedMsg     | heading     |
+      | Test_09 | Digest Auth | https://admin:admin@the-internet.herokuapp.com/digest_auth | digest_auth | Congratulations | Digest Auth |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Drag and Drop functionality
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Then I should navigate to the <link> page with heading - <heading>
+    Then I verify the drag and drop fucntionality
+    Examples:
+      | TestID  | pageName      | link          | heading       |
+      | Test_10 | Drag and Drop | drag_and_drop | Drag and Drop |
