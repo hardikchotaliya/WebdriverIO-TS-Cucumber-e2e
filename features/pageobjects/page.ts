@@ -24,6 +24,10 @@ export default class Page {
         await webElement.click();
     }
 
+    async rightClick(webElement: WebdriverIO.Element) {
+        await webElement.click({ button: 2, skipRelease:true});
+    }
+
     async getCurrentUrl(): Promise<string> {
         let gtURL = await browser.getUrl();
         return gtURL;
@@ -124,6 +128,14 @@ export default class Page {
 
     async getAlertText(): Promise<string> {
         return await browser.getAlertText();
+    }
+
+    async acceptAlert(): Promise<void> {
+        await browser.acceptAlert();
+    }
+
+    async waitForWhile(value = Timeouts._5Seconds): Promise<void> {
+        await browser.pause(value);
     }
 
     async checkBrokenImagesUsingResponseCode(testid: string, webElement: WebdriverIO.ElementArray): Promise<string[]> {

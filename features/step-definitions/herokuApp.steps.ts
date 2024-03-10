@@ -40,3 +40,7 @@ Then(/^I verify the checkboxes functionality$/, async function () {
     await HerokuAppPage.uncheckAllCheckboxes(this.testid);
     await HerokuAppPage.checkAllCheckboxes(this.testid);
 });
+
+Then(/^I verify the Context menu functionality$/, async function () {
+    await HerokuAppPage.verifyContextMenuByRightClick(this.testid);
+});

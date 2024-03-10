@@ -59,3 +59,12 @@ Feature: Verify Internet herokuapp Website
     Examples:
       | TestID  | pageName   | link       | path       | heading    |
       | Test_07 | Checkboxes | checkboxes | checkboxes | Checkboxes |
+
+  @herokuapp
+  Scenario Outline: <TestID>: As a user, I am verifying Context menu items that are custom additions that appear in the right-click menu
+    Given I am on the Herokuapp <pageName> page with <link> path
+    Then I should navigate to the <link> page with heading - <heading>
+    Then I verify the Context menu functionality
+    Examples:
+      | TestID  | pageName     | link         | path         | heading      |
+      | Test_08 | Context Menu | context_menu | context_menu | Context Menu |

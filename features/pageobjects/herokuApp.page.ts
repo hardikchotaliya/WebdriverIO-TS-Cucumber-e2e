@@ -20,6 +20,7 @@ class HerokuAppPage extends Page {
     get btnDelete() { return $('//button[text()="Delete"][last()]'); }
     get gtBodyMsg() { return $('#content p'); }
     get gtImages() { return $$('img'); }
+    get clkContextMenuSpot() { return $('div#hot-spot'); }
 
     /**
     * Opens a sub page of the page
@@ -135,7 +136,7 @@ class HerokuAppPage extends Page {
 
     async checkAllCheckboxes(testid: string) {
         const checkboxes = await $$('#checkboxes input[type="checkbox"]');
-        
+
         for (const checkbox of checkboxes) {
             const isChecked = await checkbox.isSelected();
             if (!isChecked) {
@@ -143,13 +144,13 @@ class HerokuAppPage extends Page {
             }
             await expect(checkbox).toBeChecked();
         }
-    
+
         reporter.addStep(testid, "info", `Assertion of ${testid} >> Verified all checkboxes are checked`);
     }
-    
+
     async uncheckAllCheckboxes(testid: string) {
         const checkboxes = await $$('#checkboxes input[type="checkbox"]');
-        
+
         for (const checkbox of checkboxes) {
             const isChecked = await checkbox.isSelected();
             if (isChecked) {
@@ -157,12 +158,19 @@ class HerokuAppPage extends Page {
                 await expect(checkbox).not.toBeChecked();
             }
         }
-    
+
         reporter.addStep(testid, "info", `Assertion of ${testid} >> Verified all checkboxes are unchecked`);
     }
 
-
-
+    async verifyContextMenuByRightClick(testid: string) {
+        await page.rightClick(await this.clkContextMenuSpot);
+        await page.waitForWhile(Timeouts._3Seconds);
+        const sAlertText = await page.getAlertText();
+        await page.checkIfEqualText(sAlertText, 'You selected a context menu', 'Alert box is not open or text is not matching');
+        await page.acceptAlert();
+        reporter.addStep(testid, "info", `Assertion of ${testid} >> Context menu right clikced successfully`);
+    }
+    
 
 }
 
