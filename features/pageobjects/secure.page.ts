@@ -1,4 +1,4 @@
-import { $ } from '@wdio/globals'
+import { $, expect } from '@wdio/globals'
 import Page from './page.js';
 
 /**
@@ -8,8 +8,17 @@ class SecurePage extends Page {
     /**
      * define selectors using getter methods
      */
-    public get flashAlert () {
+    public get flashAlert() {
         return $('#flash');
+    }
+
+    /* Page Actions */
+    public async checkFlashMessage(message: string) {
+        await expect(this.flashAlert).toBeExisting();
+        const flashText = await this.flashAlert.getText();
+        // Remove the × character and trim whitespace
+        const cleanText = flashText.replace('×', '').trim();
+        expect(cleanText).toBe(message);
     }
 }
 

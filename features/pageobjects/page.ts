@@ -18,7 +18,7 @@ export default class Page {
 
     async click(webElement: WebdriverIO.Element) {
         await webElement.waitForClickable({ timeout: 20000 });
-        if ((await (await webElement).isDisplayedInViewport()) === false) {
+        if ((await (await webElement).isDisplayed({ withinViewport: true })) === false) {
             await (await webElement).scrollIntoView();
         }
         await webElement.click();
@@ -47,7 +47,7 @@ export default class Page {
     async checkURLContains(expectedURL: string): Promise<void> {
         try {
             let currentURL = await this.getCurrentUrl();
-            await expect(browser).toHaveUrlContaining(expectedURL);
+            await expect(browser).toHaveUrl(expectedURL);
             console.log(`Assertion >> As Expected: ${expectedURL} is equal to ${currentURL}.`);
         } catch (err) {
             console.error(`Assertion >> Not Expected: ${err.message}`);
@@ -91,7 +91,7 @@ export default class Page {
     async checkIfEqualContainsText(webElement: WebdriverIO.Element, expected: string, msg?: string): Promise<void> {
         try {
             // await expect(actual).toEqual(expected);
-            await expect(webElement).toHaveTextContaining(expected);
+            await expect(webElement).toHaveText(expected);
             console.log(`Assertion >> As Actual text is equal to ${expected}.`);
         } catch (err) {
             console.log(`Message: ${msg}, Error: ${err}`);
@@ -119,7 +119,7 @@ export default class Page {
 
     async checkIsElementDisplayedInViewport(webElement: WebdriverIO.Element, msg?: string): Promise<boolean> {
         try {
-            return await webElement.isDisplayedInViewport();
+            return await webElement.isDisplayed({ withinViewport: true });
         } catch (err) {
             console.log(`Message: ${msg}, Error: ${err}`);
             throw err;

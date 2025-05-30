@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import allure from "@wdio/allure-reporter";
-import logger from "./logger.js";
+import logger from "./logger";
 
 /**
  * Global reporter used for both logger and Allure.
@@ -12,7 +13,7 @@ import logger from "./logger.js";
  * @todo 
  * 1. Add more param of allure reporter like add issue (to add an JIRA issue..etc)
  */
-function addStep(testid: string, loglevel: string, msg: string, toAllure = true, issueid: any = undefined) {
+function addStep(testid: string, loglevel: string, msg: string, toAllure: boolean = true, issueid?: any) {
     const arr = ["info", "debug", "warn", "error"];
     if (!testid) throw Error(`Invalid testid: ${testid} field to report step`);
     if (!msg) logger.error(`Given message: ${msg} is not valid to report`);

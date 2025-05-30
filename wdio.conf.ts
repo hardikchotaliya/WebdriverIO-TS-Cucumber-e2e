@@ -1,24 +1,18 @@
-import type { Options } from '@wdio/types';
+import type { ITestCaseHookParameter } from '@cucumber/cucumber';
 import * as dotenv from 'dotenv';
+import * as allure from "@wdio/allure-reporter";
 
 // Load the .env file
 dotenv.config();
 
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
     //
     // ====================
     // Runner Configuration
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
-    autoCompileOpts: {
-        autoCompile: true,
-        tsNodeOpts: {
-            project: './tsconfig.json',
-            transpileOnly: true
-        }
-    },
-    
+
     //
     // ==================
     // Specify Test Files
@@ -65,7 +59,18 @@ export const config: Options.Testrunner = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: [
+                'window-size=1920,1080',
+                '--disable-notifications',
+                '--disable-gpu',
+                '--no-sandbox',
+                '--disable-popup-blocking',
+                '--disable-infobars',
+                'user-agent=np-auto-test-agent',
+            ]
+        }
     }],
 
     //
@@ -145,9 +150,9 @@ export const config: Options.Testrunner = {
                 disableWebdriverStepsReporting: true,
                 disableWebdriverScreenshotsReporting: false,
                 useCucumberStepReporter: true,
-                addConsoleLogs: true, // commented to check whether it is hurting AWS integration or not,
+                addConsoleLogs: true,
                 reportedEnvironmentVars: {
-                    'URL: ': process.env.URL_SET
+                    URL: process.env.URL_SET || ''
                 }
             }]
     ],
@@ -175,7 +180,9 @@ export const config: Options.Testrunner = {
         // <number> timeout for step definitions
         timeout: 60000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
-        ignoreUndefinedDefinitions: false
+        ignoreUndefinedDefinitions: false,
+        colors: true,
+        format: ['pretty'],
     },
 
     //
@@ -254,13 +261,65 @@ export const config: Options.Testrunner = {
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {object}                 context  Cucumber World object
      */
-    beforeScenario: function (world, context) {
-        // console.log(`>> world: ${JSON.stringify(world)}`);
-        let arr = world.pickle.name.split(/:/)
+    beforeScenario: function (world: ITestCaseHookParameter, context) {
+        // Register a listener for dialog Alert events
+        browser.on('dialog', async (dialog) => {
+            // console.log(`Dialog detected: ${dialog.message()}`);
+        });
+
+        let arr = world.pickle.name.split(/:/);
+        console.log('Test ID from scenario name:', arr[0]);
+
         // @ts-ignore
         if (arr.length > 0) browser.options.testid = arr[0]
+
         // @ts-ignore
         if (!browser.options.testid) throw Error(`Error getting testid for current scenario: ${world.pickle.name}`)
+
+        const browserName = browser.capabilities.browserName;
+        const browserVersion = browser.capabilities.browserVersion;
+        console.log(`Running tests on Browser: ${browserName}, Version: ${browserVersion}`);
+
+        /* Adding Test case Owner name */
+        if (world.gherkinDocument?.feature?.children) {
+            const scenarios = world.gherkinDocument.feature.children;
+            let owner = null;
+            let severity = null;
+
+            scenarios.forEach(scenario => {
+                if (scenario.scenario?.examples?.[0]) {
+                    const examples = scenario.scenario.examples[0].tableBody;
+                    // @ts-ignore
+                    const headers = scenario.scenario.examples[0].tableHeader.cells as { value: string }[];
+
+                    // Find the index of the 'Owner' and 'Severity' columns
+                    const ownerIndex = headers.findIndex(header => header.value === 'Owner');
+                    const severityIndex = headers.findIndex(header => header.value === 'Severity');
+                    console.log('Owner index:', ownerIndex, 'Severity index:', severityIndex);
+
+                    if (ownerIndex !== -1) {
+                        const example = examples.find(row => {
+                            const rowValue = row.cells[0].value.trim();
+                            console.log('Comparing row value:', rowValue, 'with test ID:', arr[0].trim());
+                            return rowValue.localeCompare(arr[0].trim(), undefined, { sensitivity: 'base' }) === 0;
+                        });
+
+                        if (example) {
+                            owner = example.cells[ownerIndex].value;
+                            console.log('Found owner:', owner);
+                            allure.addOwner(owner);
+                            if (severityIndex !== -1) {
+                                severity = example.cells[severityIndex].value;
+                                console.log('Found severity:', severity);
+                                allure.addSeverity(severity);
+                            }
+                        } else {
+                            console.log('No matching example found for test ID:', arr[0].trim());
+                        }
+                    }
+                }
+            });
+        }
     },
     /**
      *
@@ -302,11 +361,8 @@ export const config: Options.Testrunner = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {object}                 context          Cucumber World object
      */
-    afterScenario: async function (world, result, context) {
-        // await console.log(`>> world: ${JSON.stringify(world)}`);
-        // await console.log(`>> context: ${JSON.stringify(context)}`);
-        console.log(world.result.status === "PASSED" ? `Passed - ${world.pickle.name}` : `Failed - ${world.pickle.name}`);
-        // console.log(world.pickle.name);
+    afterScenario: async function (world: ITestCaseHookParameter, result, context) {
+        console.log(world.result?.status === "PASSED" ? `Passed - ${world.pickle.name}` : `Failed - ${world.pickle.name}`);
         await browser.takeScreenshot();
     },
     /**
@@ -317,7 +373,7 @@ export const config: Options.Testrunner = {
      */
     // afterFeature: function (uri, feature) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name

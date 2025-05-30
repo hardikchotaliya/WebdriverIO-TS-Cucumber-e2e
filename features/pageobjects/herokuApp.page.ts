@@ -12,19 +12,19 @@ class HerokuAppPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get flashAlert() { return $('#flash'); }
-    get waitPageLoad() { return $('#content'); }
-    get homepageHeading() { return $('#content > h1'); }
-    get pageHeading() { return $('#content h3'); }
-    get btnAddElement() { return $('//button[text()="Add Element"]'); }
-    get btnDelete() { return $('//button[text()="Delete"][last()]'); }
-    get gtBodyMsg() { return $('#content p'); }
-    get gtImages() { return $$('img'); }
-    get clkContextMenuSpot() { return $('div#hot-spot'); }
-    get gtColumnAHeading() { return $('#column-a header'); }
-    get gtColumnBHeading() { return $('#column-b header'); }
-    get clkColumnA() { return $('#column-a'); }
-    get clkColumnB() { return $('#column-b'); }
+    get flashAlert() { return $('#flash').getElement(); }
+    get waitPageLoad() { return $('#content').getElement(); }
+    get homepageHeading() { return $('#content > h1').getElement(); }
+    get pageHeading() { return $('#content h3').getElement(); }
+    get btnAddElement() { return $('//button[text()="Add Element"]').getElement(); }
+    get btnDelete() { return $('//button[text()="Delete"][last()]').getElement(); }
+    get gtBodyMsg() { return $('#content p').getElement(); }
+    get gtImages() { return $$('img').getElements(); }
+    get clkContextMenuSpot() { return $('div#hot-spot').getElement(); }
+    get gtColumnAHeading() { return $('#column-a header').getElement(); }
+    get gtColumnBHeading() { return $('#column-b header').getElement(); }
+    get clkColumnA() { return $('#column-a').getElement(); }
+    get clkColumnB() { return $('#column-b').getElement(); }
 
     /**
     * Opens a sub page of the page
@@ -58,7 +58,7 @@ class HerokuAppPage extends Page {
     }
 
     async clickLink(link: string) {
-        const ele = await $(`a[href$='${link}']`);
+        const ele = await $(`a[href$='${link}']`).getElement();
         await page.click(ele);
     }
 
