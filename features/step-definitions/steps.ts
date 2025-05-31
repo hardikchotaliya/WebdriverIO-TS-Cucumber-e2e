@@ -21,7 +21,7 @@ When(/^I login with (\w+) and (.+)$/, async function (username, password) {
 
 Then(/^I should see a flash message saying (.*)$/, async function (message) {
     // console.log("App ID - " + this.appid); //Get appid
-    await page.waitForVisibilityOf(await SecurePage.flashAlert, Timeouts._10Seconds)
+    await page.waitForVisibilityOf(await SecurePage.flashAlert.getElement(), Timeouts._10Seconds)
     await SecurePage.checkFlashMessage(message);
 });
 

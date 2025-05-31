@@ -295,12 +295,10 @@ export const config: WebdriverIO.Config = {
                     // Find the index of the 'Owner' and 'Severity' columns
                     const ownerIndex = headers.findIndex(header => header.value === 'Owner');
                     const severityIndex = headers.findIndex(header => header.value === 'Severity');
-                    console.log('Owner index:', ownerIndex, 'Severity index:', severityIndex);
 
                     if (ownerIndex !== -1) {
                         const example = examples.find(row => {
                             const rowValue = row.cells[0].value.trim();
-                            console.log('Comparing row value:', rowValue, 'with test ID:', arr[0].trim());
                             return rowValue.localeCompare(arr[0].trim(), undefined, { sensitivity: 'base' }) === 0;
                         });
 
@@ -310,7 +308,6 @@ export const config: WebdriverIO.Config = {
                             allure.addOwner(owner);
                             if (severityIndex !== -1) {
                                 severity = example.cells[severityIndex].value;
-                                console.log('Found severity:', severity);
                                 allure.addSeverity(severity);
                             }
                         } else {
